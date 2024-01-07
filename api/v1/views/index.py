@@ -19,3 +19,20 @@ hbnbText = {
 def hbnbStatus():
     """hbnbStatus"""
     return jsonify({"status": "OK"})
+
+
+@app_views.route('/stats', strict_slashes=False)
+def hbnbStats():
+    """hbnbStats"""
+    response = {}
+    PLURALS = {
+            "Amenity": "amenities",
+            "City": "cities",
+            "Place": "places",
+            "Review": "reviews",
+            "State": "states",
+            "User": "users"
+            }
+    for key, value in PLURALS.items():
+        response[value] = storage.count(key)
+    return jsonify(response)
